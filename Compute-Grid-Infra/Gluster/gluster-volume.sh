@@ -103,7 +103,6 @@ setup_gluster_volume()
         #gluster vol create dist-vol replica $NODE_COUNT $HOSTNAME:/rhs/brick1/dist-vol ${VOLUME[@]} force
 		gluster vol create dist-vol replica 2 $HOSTNAME:/rhs/brick1/dist-vol ${VOLUME[@]} force
 		echo "gluster vol create dist-vol replica 2 $HOSTNAME:/rhs/brick1/dist-vol "${VOLUME[@]}""		
-		gluster volume info
 		gluster volume start dist-vol
 		gluster volume info
 }
