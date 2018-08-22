@@ -349,7 +349,7 @@
     },
     {
        "condition": "[equals(parameters('sharedStorage'),'gluster')]",
-      "name": "[concat('clusterSet', copyindex())]",
+      "name": "[concat('glusterclusterSet', copyindex())]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[variables('deploymentApiVersion')]",
       "copy": {
