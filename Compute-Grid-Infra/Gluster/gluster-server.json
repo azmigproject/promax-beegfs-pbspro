@@ -322,7 +322,7 @@
           },
           "osProfile": {
             "computerNamePrefix": "[parameters('vmssName')]",
-            "adminUsername": "[parameters('adminUsername')]",
+            "adminUsername": "[parameters('nodeOSSettings').adminUsername]",
             "linuxConfiguration": {
               "disablePasswordAuthentication": "true",
               "ssh": {
@@ -419,7 +419,7 @@
           },
           "osProfile": {
             "computerNamePrefix": "[variables('vmssNameVolume')]",
-            "adminUsername": "[parameters('adminUsername')]",
+            "adminUsername": "[parameters('nodeOSSettings').adminUsername]",
             "linuxConfiguration": {
               "disablePasswordAuthentication": "true",
               "ssh": {
