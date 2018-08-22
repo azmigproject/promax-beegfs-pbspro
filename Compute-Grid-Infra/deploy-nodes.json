@@ -136,28 +136,7 @@
       "metadata": {
         "description": "Number of VMSSes to deploy (max of 100)"
       }
-    },
-    "storageDiskSize": {
-      "type": "string",
-      "defaultValue": "P30",
-      "allowedValues": [
-        "P10",
-        "P20",
-        "P30"
-      ],
-      "metadata": {
-        "description": "Premium storage disk size used for the storage services"
-      }
-    },
-    "StorageDisksCount": {
-      "type": "int",
-      "defaultValue": 10,
-      "minValue": 0,
-      "maxValue": 10,
-      "metadata": {
-        "description": "Number of storage disks"
-      }
-    },
+    },   
     "RGvnetName": {
       "type": "string",
       "metadata": {
