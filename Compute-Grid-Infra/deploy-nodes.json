@@ -226,7 +226,12 @@
       "storageAccountType": "Standard_LRS",
       "sharedStorage": "[parameters('sharedStorage')]",
       "scheduler": "[parameters('scheduler')]",
-      "monitoring": "[parameters('monitoring')]"
+      "monitoring": "[parameters('monitoring')]",
+      "clientId": "[parameters('clientId')]",
+      "clientSecret": "[parameters('clientSecret')]",
+      "StorageDisksCount": "[parameters('StorageDisksCount')]",
+      "storageDiskSize": "[parameters('storageDiskSize')]"
+       
     },
     "osTypes": {
       "Ubuntu_16.04": {
