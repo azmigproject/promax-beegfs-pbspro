@@ -57,8 +57,7 @@
     "vmssNameVolume": "[concat(parameters('vmssName'), 'master')]",
     "vmssCountVolume": 1,
     "vnetID": "[resourceId(parameters('nodeSettings').vnetRG, 'Microsoft.Network/virtualNetworks', parameters('nodeSettings').vnetName)]",
-    "subnetRef": "[concat(variables('vnetID'),'/subnets/', parameters('nodeSettings').subnetName)]",
-    "subnetName": "[parameters('nodeSettings').subnetName]",
+    "subnetRef": "[concat(variables('vnetID'),'/subnets/', parameters('nodeSettings').subnetName)]",    
     "publicIPAddressName": "[concat(parameters('vmssName'), 'pip')]",
     "publicIPAddressName2": "[concat(parameters('vmssName'), 'pip2')]",
     "loadBalancerName0": "[concat(parameters('vmssName'), 'lb0')]",
@@ -198,7 +197,7 @@
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[concat(variables('publicIPAddressName'),copyIndex())]",
       "location": "[variables('location')]",
-      "apiVersion": "[variables('networkApiVersion')]",
+      "apiVersion": "2016-06-01",
       "copy": {
         "name": "[variables('publicIPAddressName')]",
         "count": "[variables('vmsscount')]"
@@ -214,7 +213,7 @@
       "type": "Microsoft.Network/loadBalancers",
       "name": "[variables('loadBalancerName0')]",
       "location": "[variables('location')]",
-      "apiVersion": "[variables('networkApiVersion')]",
+      "apiVersion": "2016-06-01",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', concat(variables('publicIPAddressName'),'0'))]",
         "[concat('Microsoft.Network/publicIPAddresses/', concat(variables('publicIPAddressName'),'1'))]"
@@ -298,8 +297,7 @@
       "location": "[variables('location')]",
       "apiVersion": "[variables('computeApiVersion')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName0'))]",
-        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+        "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName0'))]"       
       ],
       "sku": {
         "name": "[variables('glusterNodeSettings').VMsku]",
@@ -381,6 +379,106 @@
                       "[uri(deployment().properties.templateLink.uri, 'Scripts/gluster-server.sh')]"
                     ],
                     "commandToExecute": "[ concat('bash gluster-server.sh ', variables('jumpboxName')) ]"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "name": "[variables('vmssNameVolume')]",
+      "location": "[variables('location')]",
+      "apiVersion": "[variables('computeApiVersion')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName1'))]",        
+        "[concat('Microsoft.Compute/virtualMachineScaleSets/', parameters('vmssName'))]"
+      ],
+      "sku": {
+        "name": "[variables('glusterNodeSettings').VMsku]",
+        "tier": "Standard",
+        "capacity": "[variables('vmssCountVolume')]"
+      },
+      "properties": {
+        "overprovision": "false",
+        "upgradePolicy": {
+          "mode": "Manual"
+        },
+        "virtualMachineProfile": {
+          "storageProfile": {
+            "osDisk": {
+              "createOption": "FromImage",
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
+              }
+            },
+            "imageReference": "[parameters('nodeOSSettings').imageReference]",
+            "dataDisks": "[concat(take(variables('storageDiskArray'),variables('glusterNodeSettings').numStorageDisks))]"
+          },
+          "osProfile": {
+            "computerNamePrefix": "[variables('vmssNameVolume')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "linuxConfiguration": {
+              "disablePasswordAuthentication": "true",
+              "ssh": {
+                "publicKeys": [
+                  {
+                    "path": "[variables('sshKeyPath')]",
+                    "keyData": "[parameters('nodeOSSettings').sshKeyData]"
+                  }
+                ]
+              }
+            }
+          },
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "[variables('nicName')]",
+                "properties": {
+                  "primary": true,
+                  "ipConfigurations": [
+                    {
+                      "name": "[variables('ipConfigName')]",
+                      "properties": {
+                        "subnet": {
+                          "id": "[variables('subnetRef')]"
+                        },
+                        "loadBalancerInboundNatPools": [
+                          {
+                           "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', variables('loadBalancerName1'), '/inboundNatPools/', variables('natPoolNameLast'))]"
+                          }
+                        ],
+                        "loadBalancerBackendAddressPools": [
+                          {
+                            "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', variables('loadBalancerName1'), '/backendAddressPools/', variables('bePoolNameLast'))]"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]   
+            
+          },
+          "extensionProfile": {
+            "extensions": [
+              {
+                "name": "lapextension2",
+                "properties": {
+                  "publisher": "Microsoft.Azure.Extensions",
+                  "type": "CustomScript",
+                  "typeHandlerVersion": "2.0",
+                  "autoUpgradeMinorVersion": true,
+                  "settings": {
+                    "fileUris": [
+                      "[uri(deployment().properties.templateLink.uri, 'Scripts/gluster-server.sh')]",
+                      "[uri(deployment().properties.templateLink.uri, 'Scripts/gluster-volume.sh')]"
+                      
+                    ],
+                    "commandToExecute": "[concat('bash gluster-server.sh ', variables('jumpboxName'),';' ,'bash gluster-volume.sh ', variables('vmssname'),' ',variables('rgname'),' ',variables('clientId'),' ',variables('clientSecret'),' ',variables('tenantId'),' ',variables('nodes'))]"
                   }
                 }
               }
