@@ -229,6 +229,7 @@
       "monitoring": "[parameters('monitoring')]",
       "clientId": "[parameters('clientId')]",
       "clientSecret": "[parameters('clientSecret')]",
+       "tenantId": "[parameters('tenantId')]",
       "StorageDisksCount": "[parameters('StorageDisksCount')]",
       "storageDiskSize": "[parameters('storageDiskSize')]"
        
