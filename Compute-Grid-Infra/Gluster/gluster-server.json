@@ -44,9 +44,7 @@
       }
     }
   },
-  "variables": {
-    "addressPrefix": "[parameters('addressPrefix')]",
-    "subnetPrefix": "[parameters('subnetPrefix')]",
+  "variables": {   
     "virtualNetworkName": "[parameters('nodeSettings').vnetName]",
     "vmssname": "[parameters('vmssName')]",
     "jumpboxName": "[parameters('nodeSettings').MasterName]",
@@ -120,6 +118,11 @@
         "offer": "CentOS",
         "sku": "7.3",
         "version": "latest"
+      }, "CentOS_6.9": {
+        "publisher": "OpenLogic",
+        "offer": "CentOS",
+        "sku": "6.9",
+        "version": "latest"
       },
       "RHEL_7.2": {
         "publisher": "RedHat",
@@ -130,7 +133,7 @@
     },   
     "computeApiVersion": "2016-04-30-preview",
     "sshKeyPath": "[concat('/home/',parameters('nodeOSSettings').adminUserName,'/.ssh/authorized_keys')]",
-    "glusterInstall": "[concat('bash install_gluster.sh ', 'gluster000000', ' client')]",
+    
     "storageDiskArray": [
       {
         "diskSizeGB": "[variables('glusterNodeSettings').storageDiskSize]",
@@ -190,27 +193,7 @@
     ]
   },
   "resources": [
-    {
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[variables('virtualNetworkName')]",
-      "location": "[variables('location')]",
-      "apiVersion": "[variables('networkApiVersion')]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[variables('addressPrefix')]"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "[variables('subnetName')]",
-            "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]"
-            }
-          }
-        ]
-      }
-    },
+  
     {
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[concat(variables('publicIPAddressName'),copyIndex())]",
