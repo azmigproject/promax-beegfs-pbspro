@@ -157,8 +157,7 @@
       "metadata": {
         "description": "Number of storage disks"
       }
-    }
-  },
+    },
     "RGvnetName": {
       "type": "string",
       "metadata": {
