@@ -402,24 +402,6 @@
                 }
               }
             ]           
-          },
-          "extensionProfile": {
-            "extensions": [
-              {
-                "name": "lapextension1",
-                "properties": {
-                  "publisher": "Microsoft.Azure.Extensions",
-                  "type": "CustomScript",
-                  "typeHandlerVersion": "2.0",
-                  "autoUpgradeMinorVersion": true,
-                  "settings": {
-                    "fileUris": "[variables('vmScripts').scriptsToDownload]",
-                    "commandToExecute": "",
-                     "timestamp": 12345
-                  }
-                }
-              }
-            ]
           }
         }
       }
@@ -499,23 +481,6 @@
               }
             ]   
             
-          },
-          "extensionProfile": {
-            "extensions": [
-              {
-                "name": "lapextension2",
-                "properties": {
-                  "publisher": "Microsoft.Azure.Extensions",
-                  "type": "CustomScript",
-                  "typeHandlerVersion": "2.0",
-                  "autoUpgradeMinorVersion": true,
-                  "settings": {
-                    "fileUris": "[variables('vmScripts').scriptsToDownload]",                   
-                    "commandToExecute": ""
-                  }
-                }
-              }
-            ]
           }
         }
       }
