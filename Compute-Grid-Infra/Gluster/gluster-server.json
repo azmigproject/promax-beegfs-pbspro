@@ -86,7 +86,7 @@
     "location": "[resourceGroup().location]",
     "rgname": "[resourceGroup().name]",
     "installLIS": "bash InstallLIS.sh",
-     "ScriptsOptions": {
+    "ScriptsOptions": {
       "none": {
         "params": ""
       },
@@ -95,6 +95,9 @@
       },
       "beegfs": {
         "params": " -S beegfs"
+      },
+      "gluster": {
+        "params": " -S gluster"
       },
       "ganglia": {
         "params": " -n ganglia"
@@ -109,6 +112,18 @@
         "params": "[concat(' -c ', parameters('postInstallCommand'))]"
       }
     },
+     "cnSetupScript": "cn-setup.sh",
+    "vmScripts": {
+      "scriptsToDownload": [
+        "[uri(deployment().properties.templateLink.uri, variables('cnSetupScript'))]",
+        "[uri(deployment().properties.templateLink.uri, 'BeeGFS/install_beegfs.sh')]",        
+        "[uri(deployment().properties.templateLink.uri, 'Gluster/gluster_server.sh')]",
+        "[uri(deployment().properties.templateLink.uri, 'PBSPro/install_pbspro.sh')]",
+        "[uri(deployment().properties.templateLink.uri, 'PBSPro/pbs_selfregister.sh')]",
+        "[uri(deployment().properties.templateLink.uri, 'Ganglia/install_ganglia.sh')]"
+      ],
+      "commandToExecute": "[concat('bash ', variables('cnSetupScript'), variables('ScriptsOptions')['master'].params, variables('ScriptsOptions')[parameters('nodeSettings').scheduler].params, variables('ScriptsOptions')[parameters('nodeSettings').sharedStorage].params, variables('ScriptsOptions')[parameters('nodeSettings').monitoring].params, variables('ScriptsOptions')['postinstall'].params)]"
+    },     
     "StandardStorageMap": {
       "S10": {
         "size": 128
@@ -398,10 +413,9 @@
                   "typeHandlerVersion": "2.0",
                   "autoUpgradeMinorVersion": true,
                   "settings": {
-                    "fileUris": [
-                      "[uri(deployment().properties.templateLink.uri, 'Scripts/gluster-server.sh')]"
-                    ],
-                    "commandToExecute": "[ concat('bash gluster-server.sh ', variables('jumpboxName')) ]"
+                    "fileUris": "[variables('vmScripts').scriptsToDownload]",
+                    "commandToExecute": "[variables('vmScripts').commandToExecute]",
+                     "timestamp": 12345
                   }
                 }
               }
@@ -496,12 +510,8 @@
                   "typeHandlerVersion": "2.0",
                   "autoUpgradeMinorVersion": true,
                   "settings": {
-                    "fileUris": [
-                      "[uri(deployment().properties.templateLink.uri, 'Gluster/gluster-server.sh')]",
-                      "[uri(deployment().properties.templateLink.uri, 'Gluster/gluster-volume.sh')]"
-                      
-                    ],
-                    "commandToExecute": "[concat('bash gluster-server.sh ', variables('jumpboxName'),';' ,'bash gluster-volume.sh ', variables('vmssname'),' ',variables('rgname'),' ',variables('clientId'),' ',variables('clientSecret'),' ',variables('tenantId'),' ',variables('nodes'))]"
+                    "fileUris": "[variables('vmScripts').scriptsToDownload]",                   
+                    "commandToExecute": "[concat('variables('vmScripts').commandToExecute,';' ,'bash gluster-volume.sh ', variables('vmssname'),' ',variables('rgname'),' ',variables('clientId'),' ',variables('clientSecret'),' ',variables('tenantId'),' ',variables('nodes'))]"
                   }
                 }
               }

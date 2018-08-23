@@ -18,7 +18,7 @@ log()
 	echo "$1"
 }
 
-usage() { echo "Usage: $0 [-m <masterName>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-m <masterName>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, gluster>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
 
 while getopts :m:S:s:q:n:c: optname; do
   log "Option $optname set with value ${OPTARG}"
@@ -85,6 +85,10 @@ mount_nfs()
 	mount -t nfs ${MASTER_NAME}:${NFS_ON_MASTER} ${NFS_MOUNT}
 	
 	echo "${MASTER_NAME}:${NFS_ON_MASTER} ${NFS_MOUNT} nfs defaults,nofail  0 0" >> /etc/fstab
+}
+install_gluster_server()
+{
+	bash gluster_server.sh ${MASTER_NAME}
 }
 
 install_beegfs_client()
@@ -192,6 +196,8 @@ if [ "$SHARED_STORAGE" == "beegfs" ]; then
 	install_beegfs_client
 elif [ "$SHARED_STORAGE" == "nfsonmaster" ]; then
 	mount_nfs
+elif ["$SHARED_STORAGE" == "gluster"]; then
+	install_gluster_server
 fi
 
 setup_intel_mpi
