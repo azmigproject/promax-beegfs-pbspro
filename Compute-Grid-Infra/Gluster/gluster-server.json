@@ -413,8 +413,7 @@
                   "typeHandlerVersion": "2.0",
                   "autoUpgradeMinorVersion": true,
                   "settings": {
-                    "fileUris": "[variables('vmScripts').scriptsToDownload]",
-                    "commandToExecute": "[variables('vmScripts').commandToExecute]",
+                    "fileUris": "[variables('vmScripts').scriptsToDownload]",                    
                      "timestamp": 12345
                   }
                 }
@@ -510,8 +509,8 @@
                   "typeHandlerVersion": "2.0",
                   "autoUpgradeMinorVersion": true,
                   "settings": {
-                    "fileUris": "[variables('vmScripts').scriptsToDownload]",                   
-                    "commandToExecute": "[concat(variables('vmScripts').commandToExecute,';' ,'bash gluster-volume.sh ', variables('vmssname'),' ',variables('rgname'),' ',variables('clientId'),' ',variables('clientSecret'),' ',variables('tenantId'),' ',variables('nodes'))]"
+                    "fileUris": "[variables('vmScripts').scriptsToDownload]"                   
+                    
                   }
                 }
               }
