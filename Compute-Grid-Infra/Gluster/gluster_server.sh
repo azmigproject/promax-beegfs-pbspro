@@ -53,7 +53,7 @@ get_disk_count() {
 setup_raid()
 {
 	#Update system and install mdadm for managing RAID
-	yum -y update
+	yum -y update --exclude=WALinuxAgent
 	yum install mdadm -y
 
 	#Verify attached data disks
