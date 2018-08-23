@@ -73,7 +73,7 @@
     "natStartPort": 50000,
     "natEndPort": 52000,
     "natBackendPort": 22,
-    "storageDiskSize": "[variables('PremiumStorageMap')[parameters('nodeSettings').storageDiskSize].size]",
+    "storageDiskSize": "[variables('StandardStorageMap')[parameters('nodeSettings').storageDiskSize].size]",
     "numStorageDisks": "[parameters('nodeSettings').StorageDisksCount]",
     "numMetadataDisks": 0,
     "nicName": "[concat(parameters('vmssName'), 'nic')]",
@@ -86,21 +86,44 @@
     "location": "[resourceGroup().location]",
     "rgname": "[resourceGroup().name]",
     "installLIS": "bash InstallLIS.sh",
-    "PremiumStorageMap": {
-      "P10": {
+     "ScriptsOptions": {
+      "none": {
+        "params": ""
+      },
+      "nfsonmaster": {
+        "params": " -S nfsonmaster"
+      },
+      "beegfs": {
+        "params": " -S beegfs"
+      },
+      "ganglia": {
+        "params": " -n ganglia"
+      },
+      "pbspro": {
+        "params": "[concat(' -s pbspro -q ', parameters('vmssName'))]"
+      },
+      "master": {
+        "params": "[concat(' -m ', parameters('nodeSettings').MasterName)]"
+      },
+      "postinstall": {
+        "params": "[concat(' -c ', parameters('postInstallCommand'))]"
+      }
+    },
+    "StandardStorageMap": {
+      "S10": {
         "size": 128
       },
-      "P20": {
+      "S20": {
         "size": 512
       },
-      "P30": {
+      "S30": {
         "size": 1023
       }
     },
     "image": "[parameters('nodeOSSettings').imageReference]",
     "glusterNodeSettings": {
       "VMsku": "[parameters('nodeSettings').VMsku]",
-      "storageDiskSize": "[variables('PremiumStorageMap')[parameters('nodeSettings').storageDiskSize].size]",
+      "storageDiskSize": "[variables('StandardStorageMap')[parameters('nodeSettings').storageDiskSize].size]",
       "numStorageDisks": "[parameters('nodeSettings').StorageDisksCount]",
       "numStorageDisksLast": 1,
       "numMetadataDisks": 0
@@ -314,7 +337,7 @@
             "osDisk": {
               "createOption": "FromImage",
               "managedDisk": {
-                "storageAccountType": "Premium_LRS"
+                "storageAccountType": "Standard_LRS"
               }
             },
             "imageReference": "[parameters('nodeOSSettings').imageReference]",
