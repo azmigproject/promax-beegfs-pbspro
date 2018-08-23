@@ -139,11 +139,11 @@
     },
     "storageDiskSize": {
       "type": "string",
-      "defaultValue": "P30",
+      "defaultValue": "S30",
       "allowedValues": [
-        "P10",
-        "P20",
-        "P30"
+        "S10",
+        "S20",
+        "S30"
       ],
       "metadata": {
         "description": "Premium storage disk size used for the storage services"
