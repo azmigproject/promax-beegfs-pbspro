@@ -415,7 +415,7 @@
                   "autoUpgradeMinorVersion": true,
                   "settings": {
                     "fileUris": [                      
-                      "[uri(deployment().properties.templateLink.uri, variables('cnSetupScript'))]",
+                      "[uri(deployment().properties.templateLink.uri, 'cn-setup.sh')]",
                       "[uri(deployment().properties.templateLink.uri, 'BeeGFS/install_beegfs.sh')]",
                       "[uri(deployment().properties.templateLink.uri, 'Gluster/gluster_server.sh')]",
                       "[uri(deployment().properties.templateLink.uri, 'Gluster/gluster_volume.sh')]",
