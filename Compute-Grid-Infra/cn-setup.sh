@@ -196,8 +196,6 @@ if [ "$SHARED_STORAGE" == "beegfs" ]; then
 	install_beegfs_client
 elif [ "$SHARED_STORAGE" == "nfsonmaster" ]; then
 	mount_nfs
-elif ["$SHARED_STORAGE" == "gluster"]; then
-	install_gluster_server
 fi
 
 setup_intel_mpi
