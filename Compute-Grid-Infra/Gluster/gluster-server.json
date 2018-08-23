@@ -411,7 +411,7 @@
             "osDisk": {
               "createOption": "FromImage",
               "managedDisk": {
-                "storageAccountType": "Premium_LRS"
+                "storageAccountType": "Standard_LRS"
               }
             },
             "imageReference": "[parameters('nodeOSSettings').imageReference]",
@@ -474,8 +474,8 @@
                   "autoUpgradeMinorVersion": true,
                   "settings": {
                     "fileUris": [
-                      "[uri(deployment().properties.templateLink.uri, 'Scripts/gluster-server.sh')]",
-                      "[uri(deployment().properties.templateLink.uri, 'Scripts/gluster-volume.sh')]"
+                      "[uri(deployment().properties.templateLink.uri, 'Gluster/gluster-server.sh')]",
+                      "[uri(deployment().properties.templateLink.uri, 'Gluster/gluster-volume.sh')]"
                       
                     ],
                     "commandToExecute": "[concat('bash gluster-server.sh ', variables('jumpboxName'),';' ,'bash gluster-volume.sh ', variables('vmssname'),' ',variables('rgname'),' ',variables('clientId'),' ',variables('clientSecret'),' ',variables('tenantId'),' ',variables('nodes'))]"
