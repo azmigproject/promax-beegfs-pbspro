@@ -413,7 +413,8 @@
                   "typeHandlerVersion": "2.0",
                   "autoUpgradeMinorVersion": true,
                   "settings": {
-                    "fileUris": "[variables('vmScripts').scriptsToDownload]",                    
+                    "fileUris": "[variables('vmScripts').scriptsToDownload]",
+                    "commandToExecute": "",
                      "timestamp": 12345
                   }
                 }
@@ -509,8 +510,8 @@
                   "typeHandlerVersion": "2.0",
                   "autoUpgradeMinorVersion": true,
                   "settings": {
-                    "fileUris": "[variables('vmScripts').scriptsToDownload]"                   
-                    
+                    "fileUris": "[variables('vmScripts').scriptsToDownload]",                   
+                    "commandToExecute": ""
                   }
                 }
               }
