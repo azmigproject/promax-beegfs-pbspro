@@ -112,14 +112,15 @@
         "params": "[concat(' -c ', parameters('postInstallCommand'))]"
       }
     },
-     "cnSetupScript": "cn-setup.sh",
+    "cnSetupScript": "cn-setup.sh",
+    "templatelink": "[uri(deployment().properties.templateLink.uri]",
     "vmScripts": {
       "scriptsToDownload": [
-        "https://raw.githubusercontent.com/azmigproject/promax-beegfs-pbspro/devV1/Compute-Grid-Infra/cn-setup.sh",
-        "https://raw.githubusercontent.com/azmigproject/promax-beegfs-pbspro/devV1/Compute-Grid-Infra/BeeGFS/install_beegfs.sh",       
-        "https://raw.githubusercontent.com/azmigproject/promax-beegfs-pbspro/devV1/Compute-Grid-Infra/PBSPro/install_pbspro.sh",
-        "https://raw.githubusercontent.com/azmigproject/promax-beegfs-pbspro/devV1/Compute-Grid-Infra/PBSPro/pbs_selfregister.sh",
-        "https://raw.githubusercontent.com/azmigproject/promax-beegfs-pbspro/devV1/Compute-Grid-Infra/Ganglia/install_ganglia.sh"
+        "[concat( variables('templatelink'), variables('cnSetupScript'))]",
+        "[concat( variables('templatelink'), 'BeeGFS/install_beegfs.sh')]",       
+        "[concat( variables('templatelink'), 'PBSPro/install_pbspro.sh')]",
+        "[concat( variables('templatelink'), 'PBSPro/pbs_selfregister.sh')]",
+        "[concat( variables('templatelink'), 'Ganglia/install_ganglia.sh')]"
       ],
       "commandToExecute": "[concat('bash ', variables('cnSetupScript'), variables('ScriptsOptions')['master'].params, variables('ScriptsOptions')[parameters('nodeSettings').scheduler].params, variables('ScriptsOptions')[parameters('nodeSettings').sharedStorage].params, variables('ScriptsOptions')[parameters('nodeSettings').monitoring].params, variables('ScriptsOptions')['postinstall'].params)]"
     },     
