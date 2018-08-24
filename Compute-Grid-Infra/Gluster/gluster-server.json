@@ -113,10 +113,10 @@
       }
     },
     "cnSetupScript": "cn-setup.sh",
-    "templatelink": "[uri(deployment().properties.templateLink.uri), '']",
+    "templatelink": "[uri(deployment().properties.templateLink.uri, '')]",
     "vmScripts": {
       "scriptsToDownload": [
-        "[concat( variables('templatelink'), variables('cnSetupScript'))]",
+        "[uri(deployment().properties.templateLink.uri, variables('cnSetupScript'))]",
         "[concat( variables('templatelink'), 'BeeGFS/install_beegfs.sh')]",       
         "[concat( variables('templatelink'), 'PBSPro/install_pbspro.sh')]",
         "[concat( variables('templatelink'), 'PBSPro/pbs_selfregister.sh')]",
