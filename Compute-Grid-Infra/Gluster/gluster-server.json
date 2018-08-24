@@ -113,7 +113,7 @@
       }
     },
     "cnSetupScript": "cn-setup.sh",
-    "templatelink": "[uri(deployment().properties.templateLink.uri]",
+    "templatelink": "[uri(deployment().properties.templateLink.uri)]",
     "vmScripts": {
       "scriptsToDownload": [
         "[concat( variables('templatelink'), variables('cnSetupScript'))]",
@@ -139,8 +139,7 @@
     "glusterNodeSettings": {
       "VMsku": "[parameters('nodeSettings').VMsku]",
       "storageDiskSize": "[variables('StandardStorageMap')[parameters('nodeSettings').storageDiskSize].size]",
-      "numStorageDisks": "[parameters('nodeSettings').StorageDisksCount]",
-      "numStorageDisksLast": 1,
+      "numStorageDisks": "[parameters('nodeSettings').StorageDisksCount]",      
       "numMetadataDisks": 0
     },
     "computeNodeImages": {
