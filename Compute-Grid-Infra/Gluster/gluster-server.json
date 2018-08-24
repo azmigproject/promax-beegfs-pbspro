@@ -113,7 +113,7 @@
       }
     },
     "cnSetupScript": "cn-setup.sh",
-    "templatelink": "[uri(deployment().properties.templateLink.uri),'']",
+    "templatelink": "[uri(deployment().properties.templateLink.uri), '']",
     "vmScripts": {
       "scriptsToDownload": [
         "[concat( variables('templatelink'), variables('cnSetupScript'))]",
