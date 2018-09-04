@@ -49,6 +49,11 @@ install_pkgs()
 # Starts the PBS Pro control daemon on the master node and
 # the mom agent on worker nodes.
 #
+set-hostname()
+{
+	addrs=( $(arp -ni eth0 | grep -o '^[0-9][^ ]*') )
+	hostname host-"${addrs[0]}"
+}
 install_pbspro()
 {
  
@@ -148,7 +153,7 @@ if [ -e "$SETUP_MARKER" ]; then
     echo "We're already configured, exiting..."
     exit 0
 fi
-
+set-hostname
 install_pbspro
 
 # Create marker file so we know we're configured
