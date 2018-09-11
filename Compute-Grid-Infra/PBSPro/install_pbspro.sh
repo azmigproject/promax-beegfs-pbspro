@@ -134,7 +134,7 @@ EOF
 		/opt/pbs/bin/qmgr -c 'list server'
     else
 
-		set-hostname
+		#set-hostname
 
         yum install -y hwloc-devel expat-devel tcl-devel expat
 
