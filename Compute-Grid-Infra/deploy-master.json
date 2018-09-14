@@ -79,7 +79,14 @@
     "dnsServerIP": {
       "type": "string",
       "metadata": {
-        "description": "DNS server ip"  
+        "description": "DNS server ip"
+      },
+      "maxLength": 20
+    },
+     "addressRange": {
+      "type": "string",
+      "metadata": {
+        "description": "Addres range for DNS entries in NIS database"  
       },
       "maxLength": 20
     },
