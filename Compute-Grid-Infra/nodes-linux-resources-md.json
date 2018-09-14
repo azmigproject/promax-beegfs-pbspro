@@ -123,10 +123,7 @@
       "type": "Microsoft.Compute/virtualMachineScaleSets",
       "name": "[parameters('vmssName')]",
       "location": "[variables('location')]",
-      "apiVersion": "[variables('computeApiVersion')]",
-      "dependsOn": [
-        "[variables('lbName')]"
-      ],
+      "apiVersion": "[variables('computeApiVersion')]",      
       "sku": {
         "name": "[parameters('nodeSettings').VMsku]",
         "tier": "Standard",
