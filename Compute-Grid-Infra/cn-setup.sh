@@ -16,7 +16,7 @@ HPC_GID=7007
 #############################################################################
 log()
 {
-	echo "$1"
+	echo "$1"	
 }
 
 usage() { echo "Usage: $0 [-m <masterName>] [-x <nasname>] [-y <nasdevice>] [-z <nasmount>] [-f <dnsServerName>] [-g <dnsServerIP>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, otherstorage>] [-n <ganglia>] [-c <postInstallCommand>] [-k <nfsservername>]" 1>&2; exit 1; }
@@ -114,6 +114,51 @@ install_blobxfer()
 	fi
 }
 echo "${NAS_NAME} ${NAS_DEVICE} ${NAS_MOUNT}"
+setup_dns()
+{
+	sed -i  "s/PEERDNS=yes/PEERDNS=no/g" /etc/sysconfig/network-scripts/ifcfg-eth0   
+    sed -i  "s/search/#search/g" /etc/resolv.conf
+	echo "search ${DNS_NAME}">>/etc/resolv.conf	
+	echo "domain ${DNS_NAME}">>/etc/resolv.conf
+	echo "nameserver ${DNS_IP}">>/etc/resolv.conf
+    echo "in set_DNS, updated resolv.conf"
+
+    echo "in set_DNS, starting to write dhclient-exit-hooks"
+    cat > /etc/dhcp/dhclient-exit-hooks << EOF
+		str1="$(grep -x "search ${DNS_NAME}" /etc/resolv.conf)"
+		str2="$(grep -x "#search ${DNS_NAME}" /etc/resolv.conf)"
+		str3="search ${DNS_NAME}"
+		str4="#search ${DNS_NAME}"
+		if [ "$str1" == *"$str3"* && "$str2" != *"$str4"* ]; then
+		    :
+		else
+		    echo "$str3" >>/etc/resolv.conf
+		fi		
+EOF
+
+    echo "in set_DNS, written dhclient-exit-hooks"
+    #sed -i 's/required_domain="mydomain.local"/required_domain="nxad01.pttep.local"/g' /etc/dhcp/dhclient-exit-hooks.d/azure-cloud.sh
+    chmod 755 /etc/dhcp/dhclient-exit-hooks
+    echo "in set_DNS, updated Execute permission for dhclient-exit-hooks"
+
+	#sed -i  "s/networks:   files/networks:   files nis [NOTFOUND=return]/g"  /etc/nsswitch.conf
+	#sed -i  "s/hosts:      files dns/hosts: files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
+    echo "in set_DNS, updated nsswitch resolv.conf, restarting network service"
+	service network restart
+}
+
+setup_nisclient()
+{
+	yum -y install rpcbind ypbind
+	ypdomainname ${NAS_NAME}
+	echo "NISDOMAIN=${DNS_NAME}" >> /etc/sysconfig/network
+	echo "${DNS_IP} main.${DNS_NAME} main" >> /etc/hosts
+	echo "domain ${DNS_NAME} server main.${DNS_NAME}" >> /etc/yp.conf
+	setup_dns
+	/etc/init.d/rpcbind start
+	/etc/init.d/ypbind start
+}
+
 setup_user()
 {
 	if is_centos; then
@@ -145,7 +190,6 @@ setup_user()
 
     chown $HPC_USER:$HPC_GROUP $SHARE_SCRATCH	
 }
-
 setup_intel_mpi()
 {
 	if is_suse; then
@@ -183,7 +227,7 @@ if is_ubuntu; then
 		sleep 1m
 	done
 fi
-
+setup_nisclient
 setup_user
 if [ "$MONITORING" == "ganglia" ]; then
 	install_ganglia
