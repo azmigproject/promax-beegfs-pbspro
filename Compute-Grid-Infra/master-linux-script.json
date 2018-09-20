@@ -21,7 +21,7 @@
         "params": ""
       },
       "subnetaddressRanges": {
-        "params":"[concat(' -j ', parameters('subnetaddressRanges')]"
+        "params":"[concat(' -j ', parameters('subnetaddressRanges'))]"
       }
     },
 
