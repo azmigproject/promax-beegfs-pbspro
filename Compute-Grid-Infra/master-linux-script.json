@@ -16,14 +16,23 @@
     }
   },
   "variables": {
-    "vmScripts": {
-      "scriptsToDownload": [
-        "[uri(deployment().properties.templateLink.uri, 'master-setup.sh')]"
-      ],
-      "commandToExecute": "[concat( bash master-setup.sh,' -j ', parameters('subnetaddressRanges'))]"
+    "ScriptsOptions": {
+       "none": {
+        "params": ""
+      },
+      "subnetaddressRanges": {
+        "params":"[concat(' -j ', parameters('subnetaddressRanges')]"
+      }
     },
-    "extensionApiVersion": "2015-06-15"
-  },
+
+      "vmScripts": {
+        "scriptsToDownload": [
+          "[uri(deployment().properties.templateLink.uri, 'master-setup.sh')]"
+        ],
+        "commandToExecute": "[concat( bash master-setup.sh,variables('ScriptsOptions')['subnetaddressRanges'].params)]"
+      },
+      "extensionApiVersion": "2015-06-15"
+    },
   "resources": [
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
