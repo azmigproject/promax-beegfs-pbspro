@@ -83,10 +83,10 @@
       },
       "maxLength": 20
     },
-     "addressRange": {
+     "subnetaddressRanges": {
       "type": "string",
       "metadata": {
-        "description": "Addres range for DNS entries in NIS database"  
+        "description": "To provide multiple Address range use comma it will be use to create map for DNS entries in NIS database"  
       },
       "maxLength": 20
     },
@@ -224,6 +224,7 @@
       "dnsServerName": "[parameters('dnsServerName')]",
       "dnsServerIP": "[parameters('dnsServerIP')]",
       "scheduler": "[parameters('scheduler')]",
+      "subnetaddressRanges": "[parameters('subnetaddressRanges')]",
       "dataDiskSize": "[parameters('dataDiskSize')]",
       "nbDataDisks": "[parameters('nbDataDisks')]"
     },
