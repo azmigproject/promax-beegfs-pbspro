@@ -161,6 +161,8 @@ setup_nisclient()
 	setup_dns
 	/etc/init.d/rpcbind start
 	/etc/init.d/ypbind start
+	chkconfig ypbind on
+	chkconfig rpcbind on 	
 }
 
 setup_user()
@@ -238,8 +240,6 @@ if [ "$MONITORING" == "ganglia" ]; then
 fi
 
 if [ "$SCHEDULER" == "pbspro" ]; then
-/etc/init.d/rpcbind start
-/etc/init.d/ypbind start
 	install_pbspro
 fi
 
