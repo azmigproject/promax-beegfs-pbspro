@@ -238,6 +238,8 @@ if [ "$MONITORING" == "ganglia" ]; then
 fi
 
 if [ "$SCHEDULER" == "pbspro" ]; then
+/etc/init.d/rpcbind start
+/etc/init.d/ypbind start
 	install_pbspro
 fi
 
@@ -251,8 +253,7 @@ elif [ "$SHARED_STORAGE" == "otherstorage" ]; then
 fi
 
 setup_intel_mpi
-/etc/init.d/rpcbind start
-/etc/init.d/ypbind start
+
 #install_blobxfer
 
 if [ -n "$POST_INSTALL_COMMAND" ]; then
