@@ -123,17 +123,17 @@ create_nismap()
 			 value=1
 			for j in `seq $BIT`
 			do
-			        value=$(( $value * 2 ))
+		        value=$(( $value * 2 ))
 			done
 			for l in `seq $value`
 			do
-			    echo "host-$digit1-$digit2-$digit3-$digit4  $digit1.$digit2.$digit3.$digit4" >>mymap.temp
-			    digit4=$((digit4=digit4+1))
-			    rem=$(($l % 256))
-			    if [ $rem == 0 ]; then
-			            digit3=$((digit3=digit3+1))
-			            digit4=0
-			    fi
+				echo "host-$digit1-$digit2-$digit3-$digit4  $digit1.$digit2.$digit3.$digit4" >>mymap.temp
+				digit4=$((digit4=digit4+1))
+				rem=$(($l % 256))
+				if [ $rem == 0 ]; then
+				        digit3=$((digit3=digit3+1))
+				        digit4=0
+				fi
 			done
         done
 }
