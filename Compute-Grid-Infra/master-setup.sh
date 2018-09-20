@@ -4,10 +4,10 @@
 log()
 {
 	echo "$1"
-	ADDRESS_SPACE=$1
+	
 }
 
-while getopts :a:k:u:t:p optname; do
+while getopts :a:k:j:u:t:p optname; do
   log "Option $optname set with value ${OPTARG}"
   
   case $optname in
@@ -17,9 +17,9 @@ while getopts :a:k:u:t:p optname; do
     k)  # storage key
 		export AZURE_STORAGE_ACCESS_KEY=${OPTARG}
 		;;
-	j)  # storage key
-	export ADDRESS_SPACE_LIST=${OPTARG}
-	;;
+	j)  # ip ranges
+		export ADDRESS_SPACE_LIST=${OPTARG}
+		;;
   esac
 done
 
