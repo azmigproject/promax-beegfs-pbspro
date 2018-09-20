@@ -20,7 +20,7 @@
       "scriptsToDownload": [
         "[uri(deployment().properties.templateLink.uri, 'master-setup.sh')]"
       ],
-      "commandToExecute": "[concat( bash master-setup.sh,' -j ', parameters('masterSettings').subnetaddressRanges)]"
+      "commandToExecute": "[concat( bash master-setup.sh,' -j ', parameters('subnetaddressRanges'))]"
     },
     "extensionApiVersion": "2015-06-15"
   },
