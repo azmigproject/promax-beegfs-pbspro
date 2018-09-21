@@ -79,7 +79,7 @@
       },
       "maxLength": 30
     },
-    "dnsServerName": {
+    "dnsServerDomainName": {
       "type": "string",
       "metadata": {
         "description": "DNS server name"
@@ -93,7 +93,7 @@
       },
       "maxLength": 20
     },
-     "nisDomainName": {
+     "nisServerDomainName": {
       "type": "string",
       "metadata": {
         "description": "DNS server name"
@@ -248,9 +248,9 @@
       "nasname": "[parameters('nasName')]",
       "nasdevice": "[parameters('nasDevice')]",
       "mountPoint": "[parameters('nasMountPoint')]",
-      "dnsServerName": "[parameters('dnsServerName')]",
+      "dnsServerName": "[parameters('dnsServerDomainName')]",
       "dnsServerIP": "[parameters('dnsServerIP')]",
-      "nisDomainName": "[parameters('nisDomainName')]",
+      "nisDomainName": "[parameters('nisServerDomainName')]",
       "nisDomainIP": "[parameters('nisDomainIP')]",
       "scheduler": "[parameters('scheduler')]",
       "monitoring": "[parameters('monitoring')]"
