@@ -7,6 +7,7 @@ NFS_SERVER_NAME=pttnas
 NFS_ON_MASTER=/nxsdo01pool/nxsdo01pool/data
 NFS_MOUNT=/scratch
 
+
 # User
 HPC_USER=hpcuser
 HPC_UID=7007
@@ -180,7 +181,7 @@ setup_user()
     mkdir -p $NFS_MOUNT
 
 	echo "$MASTER_NAME:$SHARE_HOME $SHARE_HOME    nfs    rw,vers=3,auto,_netdev 0 0" >> /etc/fstab
-    echo "$NFS_SERVER_NAME:$NFS_ON_MASTER $NFS_MOUNT nfs rsize=65536,wsize=65536,_netdev,nofail 0 0" >> /etc/fstab
+    echo "$NFS_SERVER_NAME:$NAS_DEVICE $NAS_MOUNT nfs rsize=65536,wsize=65536,_netdev,nofail 0 0" >> /etc/fstab
 	mount -a
 	mount
    
