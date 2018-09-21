@@ -20,9 +20,9 @@ log()
 	echo "$1"	
 }
 
-usage() { echo "Usage: $0 [-m <masterName>] [-x <nasname>] [-y <nasdevice>] [-z <nasmount>] [-f <dnsServerName>] [-g <dnsServerIP>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, otherstorage>] [-n <ganglia>] [-c <postInstallCommand>] [-k <nfsservername>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-m <masterName>] [-x <nasname>] [-y <nasdevice>] [-z <nasmount>] [-f <dnsServerName>] [-g <dnsServerIP>] [-h <nisDomainName>] [-i <nisDomainIP>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, otherstorage>] [-n <ganglia>] [-c <postInstallCommand>] [-k <nfsservername>]" 1>&2; exit 1; }
 
-while getopts :m:S:s:q:n:c:x:y:z:f:g:k: optname; do
+while getopts :m:S:s:q:n:c:x:y:z:f:g:h:i:k: optname; do
   log "Option $optname set with value ${OPTARG}"
   
   case $optname in
@@ -58,6 +58,12 @@ while getopts :m:S:s:q:n:c:x:y:z:f:g:k: optname; do
 		;;
 	g)  # dns ip
 		export DNS_IP=${OPTARG}
+		;;
+	h)  # NIS serve domain name
+		export NIS_SERVER_DOMAIN=${OPTARG}
+		;;
+	i)  # NIS server ip
+		export NIS_SERVER_IP=${OPTARG}
 		;;
     q)  # queue name
 		export QNAME=${OPTARG}
@@ -115,21 +121,21 @@ install_blobxfer()
 	fi
 }
 echo "${NAS_NAME} ${NAS_DEVICE} ${NAS_MOUNT}"
-setup_dns()
+setup_nisdns()
 {
 	sed -i  "s/PEERDNS=yes/PEERDNS=no/g" /etc/sysconfig/network-scripts/ifcfg-eth0   
     sed -i  "s/search/#search/g" /etc/resolv.conf
-	echo "search ${DNS_NAME}">>/etc/resolv.conf	
-	echo "domain ${DNS_NAME}">>/etc/resolv.conf
-	echo "nameserver ${DNS_IP}">>/etc/resolv.conf
+	echo "search ${NIS_SERVER_DOMAIN}">>/etc/resolv.conf	
+	echo "domain ${NIS_SERVER_DOMAIN}">>/etc/resolv.conf
+	echo "nameserver ${NIS_SERVER_IP}">>/etc/resolv.conf
     echo "in set_DNS, updated resolv.conf"
 
     echo "in set_DNS, starting to write dhclient-exit-hooks"
     cat > /etc/dhcp/dhclient-exit-hooks << EOF
-		str1="$(grep -x "search ${DNS_NAME}" /etc/resolv.conf)"
-		str2="$(grep -x "#search ${DNS_NAME}" /etc/resolv.conf)"
-		str3="search ${DNS_NAME}"
-		str4="#search ${DNS_NAME}"
+		str1="$(grep -x "search ${NIS_SERVER_DOMAIN}" /etc/resolv.conf)"
+		str2="$(grep -x "#search ${NIS_SERVER_DOMAIN}" /etc/resolv.conf)"
+		str3="search ${NIS_SERVER_DOMAIN}"
+		str4="#search ${NIS_SERVER_DOMAIN}"
 		if [ "$str1" == *"$str3"* && "$str2" != *"$str4"* ]; then
 		    :
 		else
@@ -156,10 +162,10 @@ setup_nisclient()
 {
 	yum -y install rpcbind ypbind
 	ypdomainname ${NAS_NAME}
-	echo "NISDOMAIN=${DNS_NAME}" >> /etc/sysconfig/network
-	echo "${DNS_IP} main.${DNS_NAME} main" >> /etc/hosts
-	echo "domain ${DNS_NAME} server main.${DNS_NAME}" >> /etc/yp.conf
-	setup_dns
+	echo "NISDOMAIN=${NIS_SERVER_DOMAIN}" >> /etc/sysconfig/network
+	echo "${NIS_SERVER_IP} main.${NIS_SERVER_DOMAIN} main" >> /etc/hosts
+	echo "domain ${NIS_SERVER_DOMAIN} server main.${NIS_SERVER_DOMAIN}" >> /etc/yp.conf
+	setup_nisdns
 	/etc/init.d/rpcbind start
 	/etc/init.d/ypbind start
 	chkconfig ypbind on
