@@ -96,7 +96,13 @@
       },
       "dnsServerIP": {
         "params": "[concat(' -g ', parameters('nodeSettings').dnsServerIP)]"
-      },       
+      },
+      "nisDomainName": {
+        "params": "[concat(' -f ', parameters('nodeSettings').nisDomainName)]"
+      },
+      "nisDomainIP": {
+        "params": "[concat(' -g ', parameters('nodeSettings').nisDomainIP)]"
+      },        
       "nfsservername": {
         "params": "[concat(' -k ', parameters('nodeSettings').nfsservername)]"
       },
