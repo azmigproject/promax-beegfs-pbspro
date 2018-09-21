@@ -83,6 +83,13 @@
       },
       "maxLength": 20
     },
+     "nisDomainName": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide domain name to configure NIS server using it."
+      },
+      "maxLength": 20
+    },
      "subnetaddressRanges": {
       "type": "string",
       "metadata": {
@@ -223,6 +230,7 @@
       "mountPoint": "[parameters('nasMountPoint')]",
       "dnsServerName": "[parameters('dnsServerName')]",
       "dnsServerIP": "[parameters('dnsServerIP')]",
+      "nisDomainName": "[parameters('nisDomainName')]",
       "scheduler": "[parameters('scheduler')]",
       "subnetaddressRanges": "[parameters('subnetaddressRanges')]",
       "dataDiskSize": "[parameters('dataDiskSize')]",
