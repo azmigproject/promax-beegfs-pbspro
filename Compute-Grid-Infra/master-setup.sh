@@ -7,9 +7,8 @@ log()
 	
 }
 
-while getopts :a:k:j:u:t:p optname; do
-  log "Option $optname set with value ${OPTARG}"
-  
+while getopts :a:k:j:l:u:t:p optname; do
+  log "Option $optname set with value ${OPTARG}"  
   case $optname in
     a)  # storage account
 		export AZURE_STORAGE_ACCOUNT=${OPTARG}
@@ -19,6 +18,9 @@ while getopts :a:k:j:u:t:p optname; do
 		;;
 	j)  # ip ranges
 		export ADDRESS_SPACE_LIST=${OPTARG}
+		;;
+	l)  # ip ranges
+		export NIS_DOMAIN=${OPTARG}
 		;;
   esac
 done
@@ -143,10 +145,10 @@ nis_server()
 	SERVER_IP="$(ip addr show eth0 | grep 'inet ' | cut -f2 | awk '{ print $2}')"
     hostip="$(echo ${SERVER_IP} | sed 's\/.*\\g')"	
 	yum -y install ypserv rpcbind ypbind
-	ypdomainname nishub.local
-	echo "NISDOMAIN=nishub.local" >> /etc/sysconfig/network
-	echo "$hostip main.nishub.local main" >> /etc/hosts
-	echo "domain nishub.local server main.nishub.local" >> /etc/yp.conf
+	ypdomainname ${NIS_DOMAIN}
+	echo "NISDOMAIN=${NIS_DOMAIN}" >> /etc/sysconfig/network
+	echo "$hostip main.${NIS_DOMAIN} main" >> /etc/hosts
+	echo "domain ${NIS_DOMAIN} server main.${NIS_DOMAIN}" >> /etc/yp.conf
 	/etc/init.d/network restart
 	/etc/init.d/rpcbind start	
 	/etc/init.d/ypserv  start
@@ -163,10 +165,10 @@ nis_server()
 	#/etc/init.d/rpcbind restart
 	#/etc/init.d/ypbind restart	  
 	cd /var/yp
-	/usr/lib64/yp/makedbm -u nishub.local/hosts.byname> mymap.temp
+	/usr/lib64/yp/makedbm -u ${NIS_DOMAIN}/hosts.byname> mymap.temp
 	create_nismap
 	echo "${MASTER_NAME}  $hostip">> /var/yp/mymap.temp
-	/usr/lib64/yp/makedbm mymap.temp nishub.local/hosts.byname
+	/usr/lib64/yp/makedbm mymap.temp ${NIS_DOMAIN}/hosts.byname
 	yppush hosts.byname	
 	make
 }
