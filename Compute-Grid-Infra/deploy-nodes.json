@@ -89,6 +89,20 @@
     "dnsServerIP": {
       "type": "string",
       "metadata": {
+        "description": "DNS server ip"
+      },
+      "maxLength": 20
+    },
+     "nisDomainName": {
+      "type": "string",
+      "metadata": {
+        "description": "DNS server name"
+      },
+      "maxLength": 40
+    },
+    "nisDomainIP": {
+      "type": "string",
+      "metadata": {
         "description": "DNS server ip"  
       },
       "maxLength": 20
@@ -236,6 +250,8 @@
       "mountPoint": "[parameters('nasMountPoint')]",
       "dnsServerName": "[parameters('dnsServerName')]",
       "dnsServerIP": "[parameters('dnsServerIP')]",
+      "nisDomainName": "[parameters('nisDomainName')]",
+      "nisDomainIP": "[parameters('nisDomainIP')]",
       "scheduler": "[parameters('scheduler')]",
       "monitoring": "[parameters('monitoring')]"
     },
