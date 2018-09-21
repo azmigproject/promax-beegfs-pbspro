@@ -165,6 +165,7 @@ nis_server()
 	cd /var/yp
 	/usr/lib64/yp/makedbm -u nishub.local/hosts.byname> mymap.temp
 	create_nismap
+	echo "${MASTER_NAME}  $hostip">> /var/yp/mymap.temp
 	/usr/lib64/yp/makedbm mymap.temp nishub.local/hosts.byname
 	yppush hosts.byname	
 	make
