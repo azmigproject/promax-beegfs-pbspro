@@ -231,7 +231,8 @@
         },
         "parameters": {
           "vmName": { "value": "[parameters('masterSettings').Name]" },
-          "subnetaddressRanges":  { "value": "[parameters('masterSettings').subnetaddressRanges]" }
+          "subnetaddressRanges": { "value": "[parameters('masterSettings').subnetaddressRanges]" },
+          "nisDomainName":  { "value": "[parameters('masterSettings').nisDomainName]" }
         }
       }
     },
