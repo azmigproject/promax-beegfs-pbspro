@@ -95,7 +95,7 @@
       "metadata": {
         "description": "To provide multiple Address range use comma it will be use to create map for DNS entries in NIS database"  
       },
-      "maxLength": 20
+      "maxLength": 100
     },
     "dataDiskSize": {
       "type": "string",
