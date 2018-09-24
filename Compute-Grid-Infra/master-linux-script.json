@@ -13,28 +13,35 @@
       "metadata": {
         "Description": "subnetaddressRanges to apply the script"
       }
+    },
+      "nisDomainName": {
+      "type": "string",
+      "metadata": {
+        "Description": "subnetaddressRanges to apply the script"
+      }
     }
   },
   "variables": {
     "ScriptsOptions": {
-       "none": {
+      "none": {
         "params": ""
       },
       "subnetaddressRanges": {
         "params": "[concat(' -j ', parameters('subnetaddressRanges'))]"
-      },"nisDomainName": {
+      },
+      "nisDomainName": {
         "params": "[concat(' -l ', parameters('nisDomainName'))]"
       }
     },
     "mastersetupscript": "master-setup.sh",
-      "vmScripts": {
-        "scriptsToDownload": [
-          "[uri(deployment().properties.templateLink.uri, 'master-setup.sh')]"
-        ],
-        "commandToExecute": "[concat( 'bash ', variables('mastersetupscript'), variables('ScriptsOptions')['subnetaddressRanges'].params, variables('ScriptsOptions')['nisDomainName'].params)]"
-      },
-      "extensionApiVersion": "2015-06-15"
+    "vmScripts": {
+      "scriptsToDownload": [
+        "[uri(deployment().properties.templateLink.uri, 'master-setup.sh')]"
+      ],
+      "commandToExecute": "[concat( 'bash ', variables('mastersetupscript'), variables('ScriptsOptions')['subnetaddressRanges'].params, variables('ScriptsOptions')['nisDomainName'].params)]"
     },
+    "extensionApiVersion": "2015-06-15"
+  },
   "resources": [
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
