@@ -42,7 +42,7 @@ set_DNS()
     echo "in set_DNS, updated resolv.conf"
 
     echo "in set_DNS, starting to write dhclient-exit-hooks"
-    cat > /etc/dhcp/dhclient-exit-hooks << EOF
+    cat > /etc/dhcp/dhclient-exit-hooks_dns << EOF
 		str1="$(grep -x "search $DNS_SERVER_NAME" /etc/resolv.conf)"
 		str2="$(grep -x "#search $DNS_SERVER_NAME" /etc/resolv.conf)"
 		str3="search $DNS_SERVER_NAME"
@@ -54,17 +54,17 @@ set_DNS()
 		fi		
 EOF
 
-    echo "in set_DNS, written dhclient-exit-hooks"
+    echo "in set_DNS, written dhclient-exit-hooks_dns"
     #sed -i 's/required_domain="mydomain.local"/required_domain="nxad01.pttep.local"/g' /etc/dhcp/dhclient-exit-hooks.d/azure-cloud.sh
-    chmod 755 /etc/dhcp/dhclient-exit-hooks
-    echo "in set_DNS, updated Execute permission for dhclient-exit-hooks"
+    chmod 755 /etc/dhcp/dhclient-exit-hooks_dns
+    echo "in set_DNS, updated Execute permission for dhclient-exit-hooks_dns"
 
 	sed -i  "s/networks:   files/networks:   files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
 	sed -i  "s/hosts:      files dns/hosts: files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
     echo "in set_DNS, updated nsswitch resolv.conf, restarting network service"
 	service network restart
 }
-#set_DNS
+set_DNS
 enable_kernel_update()
 {
 	# enable kernel update
