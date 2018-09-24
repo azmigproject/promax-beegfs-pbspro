@@ -147,7 +147,7 @@ EOF
     #sed -i 's/required_domain="mydomain.local"/required_domain="nxad01.pttep.local"/g' /etc/dhcp/dhclient-exit-hooks.d/azure-cloud.sh
     chmod 755 /etc/dhcp/dhclient-exit-hooks
     echo "in set_DNS, updated Execute permission for dhclient-exit-hooks"
-	sed -i  "s/hosts:      files/hosts:      files nis/g"  /etc/nsswitch.conf
+	sed -i  "s/hosts:      files dns/hosts:      files dns nis/g"  /etc/nsswitch.conf
 	sed -i  "s/passwd:     files/passwd:     files nis/g"  /etc/nsswitch.conf
 	sed -i  "s/shadow:     files/shadow:     files nis/g"  /etc/nsswitch.conf
 	sed -i  "s/group:      files/group:      files nis/g"  /etc/nsswitch.conf

@@ -35,7 +35,7 @@ set_DNS()
 {
     sed -i  "s/PEERDNS=yes/PEERDNS=no/g" /etc/sysconfig/network-scripts/ifcfg-eth0
     echo "in set_DNS, updating resolv.conf"
-    sed -i  "s/search/#search/g" /etc/resolv.conf
+    #sed -i  "s/search/#search/g" /etc/resolv.conf
 	echo "search $DNS_SERVER_NAME">>/etc/resolv.conf	
 	echo "domain $DNS_SERVER_NAME">>/etc/resolv.conf
 	echo "nameserver $DNS_SERVER_IP">>/etc/resolv.conf
@@ -60,7 +60,7 @@ EOF
     echo "in set_DNS, updated Execute permission for dhclient-exit-hooks_dns"
 
 	sed -i  "s/networks:   files/networks:   files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
-	sed -i  "s/hosts:      files dns/hosts: files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
+	sed -i  "s/hosts:      files dns nis/hosts: files nis dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
     echo "in set_DNS, updated nsswitch resolv.conf, restarting network service"
 	service network restart
 }
