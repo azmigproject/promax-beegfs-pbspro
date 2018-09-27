@@ -28,7 +28,7 @@
         "CentOS_7.2",
         "CentOS_7.3",
         "CentOS_7.4",
-        "RHEL_6.9",
+        "RHEL_6.8",
         "SLES12",
         "W2012R2"
       ],
@@ -256,7 +256,7 @@
       "CentOS_7.4": {
         "os": "linux"
       },
-      "RHEL_6.9": {
+      "RHEL_6.8": {
         "os": "linux"
       },
       "SLES12": {
@@ -291,10 +291,10 @@
         "sku": "7.4",
         "version": "latest"
       },
-      "RHEL_6.9": {
+      "RHEL_6.8": {
         "publisher": "RedHat",
         "offer": "RHEL",
-        "sku": "RHEL_6.9",
+        "sku": "RHEL_6.8",
         "version": "latest"
       },
       "SLES12": {
