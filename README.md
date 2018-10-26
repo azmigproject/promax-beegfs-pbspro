@@ -220,7 +220,7 @@ After few minutes, once the provision succeed, you should see the new hosts adde
 
 If PBS Pro is used, SSH on the master and run the **pbsnodes -a** command to list all the registered nodes.
 
-If **nfsonmaster** is choosen the NFS mount point **/data** is automatically mounted.
+If **otherstorage** is choosen the NFS mount point **/scratch** is automatically mounted.
 
 **Your cluster is now ready to host applications and run jobs**
 
