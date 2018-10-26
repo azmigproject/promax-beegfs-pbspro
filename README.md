@@ -24,6 +24,7 @@ Theese templates setup a cluster associated with a master node and compute nodes
 * The master VM has no public ip it has private static ip (10.0.0.135). To change the fixed ip as per requierment change [here](https://github.com/azmigproject/promax-beegfs-pbspro-6.x/blob/mastercopyv1/Compute-Grid-Infra/master-shared-resources.json#L64).
 * To install the PBS pro __install-pbspro.sh__ script being used which is placed in PBSPro folder.
 * To register the compute nodes in pbs manager __pbs_selfregister.sh__ script is used and run at compute node and placed in PBSpro folder.
+* On master and compute nodes a user called __hpcuser__ is created to do ssh across the node by passwordless login. We used NFS for passwordless login.
 # Compute grid in Azure
 
 These templates will build a compute grid made by a single master VMs running the management services, multiple VM Scaleset for deploying compute nodes, and optionally a set of nodes to run [BeeGFS](http://www.beegfs.com/) as a parallel shared file system. Ganglia is an option for monitoring the cluster load, and [PBS Pro](http://www.pbspro.org/) can optionally be setup for job scheduling.
@@ -32,7 +33,14 @@ Below is the details of shell scripts :
   * __AddressSpaceList__ It is required to create NIS map for the hostname and IP pair in hosts.byname file. basically it is used for hostname resolution because we can use NIS server as DNS server.
   * __NISDomain__ It is used for the provid NIS domain name.
 * __cn-setup.sh__ script runs on the compute nodes, placed in __Compute-Grid-Infra__ folder. It is used  for setup PBS pro execute node, NIS client, ganglia monitoring tool, BeeGFS file System and NFS share mounts.To run this script following parameter must be provided:
-  * __Master Name__
+  * __Master Name__ It would be used in mounting NFS share from master for pass login.
+  * __Shared Storage__ It could be beegfs or otherstorage
+  * __Schedular_ In our the template is can setup only PBSpro.  
+  * __Monitoring__ Templa can setup Ganglia only.
+  * __NAS Device Name__ This is the NFS server name where NFS Share exists.
+  * __NAS Device__ It is the NAS device name like /share/Home/Data.
+  * __NAS Mount__ It should be an existing path on compute nodes like /scratch where NAS device wo be monuted.
+
 
 
 # VM Infrastructure
