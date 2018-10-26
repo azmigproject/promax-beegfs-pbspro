@@ -20,7 +20,7 @@ Table of Contents
 # Summary
 The template setup a cluster associated with a master node and compute nodes for CentOS_6x, to setup the cluster shell scripts are being used for required softaware installations.
 Below is the details of shell scripts :
-* __master-setup.sh__ script placed in Compute-Grid-Infra folder setups softwares like NIS server, PBS pro server.
+* __master-setup.sh__ script placed in __Compute-Grid-Infra__ folder setups softwares like NIS server, PBS pro server.
 
 # Compute grid in Azure
 
