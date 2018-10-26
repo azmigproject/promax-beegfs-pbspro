@@ -31,7 +31,8 @@ Below is the details of shell scripts :
 * __master-setup.sh__ script runs at master node, placed in __Compute-Grid-Infra__ folder, It setups softwares like NIS server, PBS pro server. To run the script following parameter is required:
   * __AddressSpaceList__ It is required to create NIS map for the hostname and IP pair in hosts.byname file. basically it is used for hostname resolution because we can use NIS server as DNS server.
   * __NISDomain__ It is used for the provid NIS domain name.
-* __cn-setup.sh__ script runs on the compute nodes, placed in __Compute-Grid-Infra__ folder. It is used  for setup PBS pro execute node, NIS client, ganglia monitoring tool, BeeGFS file System and NFS share mounts.
+* __cn-setup.sh__ script runs on the compute nodes, placed in __Compute-Grid-Infra__ folder. It is used  for setup PBS pro execute node, NIS client, ganglia monitoring tool, BeeGFS file System and NFS share mounts.To run this script following parameter must be provided:
+  * __Master Name__
 
 
 # VM Infrastructure
