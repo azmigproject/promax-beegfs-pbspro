@@ -21,8 +21,8 @@ Table of Contents
 Theese templates setup a cluster associated with a master node and compute nodes for CentOS_6x, to setup the cluster, shell scripts are being used for required softaware installations.
 * In this template there is two way to resolve hostname one is Windows DNS Server and another one is NIS.
 * The master VM has no public ip it has private static ip (10.0.0.135). To change the fixed ip as per requierment change [here](https://github.com/azmigproject/promax-beegfs-pbspro-6.x/blob/mastercopyv1/Compute-Grid-Infra/master-shared-resources.json#L64).
-* To install the PBS pro _install-pbspro.sh_ script being used which is placed in PBSPro folder.
-* To register the compute nodes in pbs manager _pbs_selfregister.sh_ script is used and run at compute node and placed in PBSpro folder.
+* To install the PBS pro __install-pbspro.sh__ script being used which is placed in PBSPro folder.
+* To register the compute nodes in pbs manager __pbs_selfregister.sh__ script is used and run at compute node and placed in PBSpro folder.
 # Compute grid in Azure
 
 These templates will build a compute grid made by a single master VMs running the management services, multiple VM Scaleset for deploying compute nodes, and optionally a set of nodes to run [BeeGFS](http://www.beegfs.com/) as a parallel shared file system. Ganglia is an option for monitoring the cluster load, and [PBS Pro](http://www.pbspro.org/) can optionally be setup for job scheduling.
