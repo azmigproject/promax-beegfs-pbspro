@@ -20,9 +20,10 @@ Table of Contents
 # Summary
 The template setup a cluster associated with a master node and compute nodes for CentOS_6x, to setup the cluster, shell scripts are being used for required softaware installations.
 Below is the details of shell scripts :
-* __master-setup.sh__ script placed in __Compute-Grid-Infra__ folder setups softwares like NIS server, PBS pro server. To run the script following parameter is required:
-  * __AddressSpaceList__ It is required to create NIS map for the hostname and IP pair in hosts.byname file. basically it is used for NIS as DNS which resolve the hostname for the nis domain.
-
+* __master-setup.sh__ script runs at master node and placed in __Compute-Grid-Infra__ folder setups softwares like NIS server, PBS pro server. To run the script following parameter is required:
+  * __AddressSpaceList__ It is required to create NIS map for the hostname and IP pair in hosts.byname file. basically it is used for hostname resolution because we can use NIS server as DNS server.
+  * __NISDomain__ It is used for the provid NIS domain name.
+* __cn-setup.sh__ 
 # Compute grid in Azure
 
 These templates will build a compute grid made by a single master VMs running the management services, multiple VM Scaleset for deploying compute nodes, and optionally a set of nodes to run [BeeGFS](http://www.beegfs.com/) as a parallel shared file system. Ganglia is an option for monitoring the cluster load, and [PBS Pro](http://www.pbspro.org/) can optionally be setup for job scheduling.
