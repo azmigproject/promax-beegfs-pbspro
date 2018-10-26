@@ -18,15 +18,17 @@ Table of Contents
   * [Running a Pallas job with PBS Pro](#running-a-pallas-job-with-pbs-pro)
 
 # Summary
-The template setup a cluster associated with a master node and compute nodes for CentOS_6x, to setup the cluster, shell scripts are being used for required softaware installations.
-Below is the details of shell scripts :
-* __master-setup.sh__ script runs at master node and placed in __Compute-Grid-Infra__ folder setups softwares like NIS server, PBS pro server. To run the script following parameter is required:
-  * __AddressSpaceList__ It is required to create NIS map for the hostname and IP pair in hosts.byname file. basically it is used for hostname resolution because we can use NIS server as DNS server.
-  * __NISDomain__ It is used for the provid NIS domain name.
-* __cn-setup.sh__ 
+Theese templates setup a cluster associated with a master node and compute nodes for CentOS_6x, to setup the cluster, shell scripts are being used for required softaware installations.
+* In this template there is two way to resolve hostname one is Windows DNS Server and another one is NIS.
+* The master VM has no public ip it has private static ip (10.0.0.135). To change the fixed ip as per requierment change [here](https://github.com/azmigproject/promax-beegfs-pbspro-6.x/blob/mastercopyv1/Compute-Grid-Infra/master-shared-resources.json#L64).
 # Compute grid in Azure
 
 These templates will build a compute grid made by a single master VMs running the management services, multiple VM Scaleset for deploying compute nodes, and optionally a set of nodes to run [BeeGFS](http://www.beegfs.com/) as a parallel shared file system. Ganglia is an option for monitoring the cluster load, and [PBS Pro](http://www.pbspro.org/) can optionally be setup for job scheduling.
+Below is the details of shell scripts :
+* __master-setup.sh__ script runs at master node, placed in __Compute-Grid-Infra__ folder, It setups softwares like NIS server, PBS pro server. To run the script following parameter is required:
+  * __AddressSpaceList__ It is required to create NIS map for the hostname and IP pair in hosts.byname file. basically it is used for hostname resolution because we can use NIS server as DNS server.
+  * __NISDomain__ It is used for the provid NIS domain name.
+* __cn-setup.sh__ script runs on the compute nodes, placed in __Compute-Grid-Infra__ folder. It is used  for setup PBS pro execute node, NIS client, ganglia monitoring tool, BeeGFS file System and NFS share mounts.
 
 
 # VM Infrastructure
