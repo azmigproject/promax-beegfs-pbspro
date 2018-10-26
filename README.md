@@ -138,7 +138,7 @@ Once the deployment succeed, use the output **masterFQDN** to retrieve the maste
 
 To check if PBSPro is installed, run the command **pbsnodes -a** this should return no available nodes, but the command should run successfully.
 
-If **nfsonmaster** is choosen, an NFS mount point named **/data** will be created.
+If **otherstorage** is choosen, an NFS mount point named **/scratch** will be created.
 
 BeeGFS will be checked later once the storage nodes will be deployed.
 
@@ -188,6 +188,13 @@ Compute nodes are provisioned using VM Scalesets, each set can have up to 100 VM
 You have to provide these parameters to the template :
 * _VMsku_ : Instance type to provision. Default is **Standard_D3_v2**
 * _sharedStorage_ : default is **none**. Allowed values are (nfsonmaster, beegfs, none)
+* _nasName_ : the name of the NAS server.
+* _nasDevice_ : the name of the NAS device which would be share.
+* _nasMountPoint_ : the name of the NAS mount point which should be exist on compute nodes.
+* _dnsServerName_ : the name of the DNS server.
+* _dnsServerIp_ : the IP of the DNS server.
+* _NISDomainName_ : the IP of the NIS domain which was setup on master node.
+* _NISDOmainIp_ : the IP of the NIS Server name.
 * _scheduler_ : default is **none**. Allowed values are (pbspro, none)
 * _monitoring_ : default is **ganglia**. Allowed values are (ganglia, none)
 * _computeNodeImage_ : OS to use for compute nodes. Default and recommended value is **CentOS_7.2**
@@ -196,9 +203,12 @@ You have to provide these parameters to the template :
 * _numberOfVMSS_ : number of VM scaleset to create. Default is 1, maximum is 100
 * _RGvnetName_ : The name of the Resource Group used to deploy the Master VM and the VNET.
 * _adminUsername_ : This is the name of the administrator account to create on the VM. It is recommended to use the same than for the Master VM.
-* _adminPassword_ : Password to associate to the administrator account. It is highly encourage to use SSH authentication and passwordless instead.
 * _sshKeyData_ : The public SSH key to associate with the administrator user. Format has to be on a single line 'ssh-rsa key'
-* _masterName_ : The short name of the Master VM
+* _masterName_ : The name of the Master VM
+* _Vnet Name_ : The name of the Virtual Network.
+* _ComputeSubnet_ : The name of the subnet want to use for compute node.
+* _NFS Server Name_ : The name of the NFS server.
+* _adminPassword_ : Password to associate to the administrator account. It is highly encourage to use SSH authentication and passwordless instead.
 * _postInstallCommand_ : a post installation command to launch after povisioning. This command needs to be encapsulated in quotes, for example **'bash /data/postinstall.sh'**.
 * _imageId_ : Specify the resource ID of the image to be used in the format **/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroup}/providers/Microsoft.Compute/images/{ImageName}** this value is only used when the _computeNodeImage_ is set to **CustomLinux** or **CustomWindows**
 
