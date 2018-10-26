@@ -40,6 +40,11 @@ Below is the details of shell scripts :
   * __NAS Device Name__ This is the NFS server name where NFS Share exists.
   * __NAS Device__ It is the NAS device name like /share/Home/Data.
   * __NAS Mount__ It should be an existing path on compute nodes like /scratch where NAS device wo be monuted.
+  * __DNS Server Name__ It is the DNS server name.
+  * __DNS IP__ It the DNS server IP.
+  * __NIS server domain__ It should be the same server domain name which is setup on NIS domain.
+  * __NIS server IP__ It should be the NIS server IP.
+
 
 
 
