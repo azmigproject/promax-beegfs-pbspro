@@ -17,6 +17,8 @@ Table of Contents
   * [Validating MPI](#validating-mpi)
   * [Running a Pallas job with PBS Pro](#running-a-pallas-job-with-pbs-pro)
 
+# Summary
+The template setup a cluster associated with a master node and compute nodes for CentOS_6x, to setup the cluster shell script is being used for required softaware installations.
 # Compute grid in Azure
 
 These templates will build a compute grid made by a single master VMs running the management services, multiple VM Scaleset for deploying compute nodes, and optionally a set of nodes to run [BeeGFS](http://www.beegfs.com/) as a parallel shared file system. Ganglia is an option for monitoring the cluster load, and [PBS Pro](http://www.pbspro.org/) can optionally be setup for job scheduling.
