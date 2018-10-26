@@ -106,14 +106,16 @@ Below is an example on how to provision the templates. First you have to login w
 The template __deploy-master.json__ will provision the networking infrastructure as well as a master VM exposing an SSH endpoint for remote connection.   
 
 You have to provide these parameters to the template :
-* _vmPrefix_ : a 8 characters prefix to be used to name your objects. The master VM will be named as **\[prefix\]master**
-* _sharedStorage_ : to specify the shared storage to use. Allowed values are : none, beegfs, nfsonmaster.
+* _VMSku_ : This is to specify the instance size of the master VM. For example Standard_DS3_v2
+* _masterImage_ : the OS to be used. Should be CentOS_6.x
+* _sharedStorage_ : to specify the shared storage to use. Allowed values are : none, beegfs, nfsonmaster
+* _nasName_ : the name of the NAS server.
+* _nasDevice_ : the name of the NAS device which would be share.
 * _scheduler_ : the job scheduler to be setup. Allowed values are : none, pbspro
 * _monitoring_ : the monitoring tools to be setup. Allowed values are : none, ganglia
-* _masterImage_ : the OS to be used. Should be CentOS_7.2
 * _dataDiskSize_ :  the size of the data disks to attached. Allowed values are : none, P10 (128GB), P20 (512GB), P30 (1023GB)
 * _nbDataDisks_ : Number of data disks to attach. Default is **2**, maximum is **16**.
-* _VMSku_ : This is to specify the instance size of the master VM. For example Standard_DS3_v2
+* _vmPrefix_ : a 8 characters prefix to be used to name your objects. The master VM will be named as **\[prefix\]master**
 * _adminUsername_ : This is the name of the administrator account to create on the VM
 * _adminPassword_ : Password to associate to the administrator account. It is highly encourage to use SSH authentication and passwordless instead.
 * _sshKeyData_ : The public SSH key to associate with the administrator user. Format has to be on a single line 'ssh-rsa key'
