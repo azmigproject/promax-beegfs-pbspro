@@ -2,6 +2,7 @@ Compute Grid Infra => all you need to build an HPC cluster in Azure with PBS Pro
 
 Table of Contents
 =================
+* [Summary](#summary)
 * [Compute grid in Azure](#compute-grid-in-azure)
 * [VM Infrastructure](#vm-infrastructure)
   * [Network](#network)
