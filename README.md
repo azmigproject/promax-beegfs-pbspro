@@ -111,13 +111,24 @@ You have to provide these parameters to the template :
 * _sharedStorage_ : to specify the shared storage to use. Allowed values are : none, beegfs, nfsonmaster
 * _nasName_ : the name of the NAS server.
 * _nasDevice_ : the name of the NAS device which would be share.
-* _scheduler_ : the job scheduler to be setup. Allowed values are : none, pbspro
-* _monitoring_ : the monitoring tools to be setup. Allowed values are : none, ganglia
+* _nasMountPoint_ : the name of the NAS mount point which should be exist on compute nodes.
+* _dnsServerName_ : the name of the DNS server.
+* _dnsServerIp_ : the IP of the DNS server.
+* _nisDomainName_ : the domain name for the NIS server by using it a NIS domain would be created.
+* _SubnetAddressRanges_ : The subnet ranges with comma separted like 10.0.0.0/21,10.0.0.0.22. It would be use to create NIS map.
 * _dataDiskSize_ :  the size of the data disks to attached. Allowed values are : none, P10 (128GB), P20 (512GB), P30 (1023GB)
 * _nbDataDisks_ : Number of data disks to attach. Default is **2**, maximum is **16**.
+* _monitoring_ : the monitoring tools to be setup. Allowed values are : none, ganglia
+* _scheduler_ : the job scheduler to be setup. Allowed values are : none, pbspro
 * _vmPrefix_ : a 8 characters prefix to be used to name your objects. The master VM will be named as **\[prefix\]master**
 * _adminUsername_ : This is the name of the administrator account to create on the VM
 * _adminPassword_ : Password to associate to the administrator account. It is highly encourage to use SSH authentication and passwordless instead.
+* __VnetName__: the name of the Virtual Network is being used for cluster.
+* __ComputeSubnet__ : the name of the compute Subnet is being used for cluster.
+* __StorageSubnet__ : the name of the storage Subnet is being used for cluster.
+* __InfraSubnet__ : the name of the infra Subnet is being used for cluster.
+* __GatewaySubnet__ : the name of the Gateway Subnet is being used for cluster.
+* _RGName_ : the name of the resource group where Virtual Network is created.
 * _sshKeyData_ : The public SSH key to associate with the administrator user. Format has to be on a single line 'ssh-rsa key'
 
 [![Click to deploy template on Azure](http://azuredeploy.net/deploybutton.png "Click to deploy template on Azure")](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fazmigproject%2Fpromax-beegfs-pbspro-6.x%2Fmastercopyv1%2FCompute-Grid-Infra%2Fdeploy-master.json)  
